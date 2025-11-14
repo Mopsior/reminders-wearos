@@ -1,4 +1,4 @@
-package pl.mopsior.reminders
+package pl.mopsior.mobile
 
 import org.junit.Test
 

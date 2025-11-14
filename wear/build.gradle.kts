@@ -39,6 +39,8 @@ android {
 }
 
 dependencies {
+    val wear_compose_version = "1.5.5"
+    implementation("androidx.wear.compose:compose-navigation:$wear_compose_version")
     implementation(libs.play.services.wearable)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -57,4 +59,7 @@ dependencies {
     wearApp(project(":wear"))
     implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.jetbrains.kotlinx.coroutines.play.services)
 }

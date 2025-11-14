@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Reminders"
-include(":mobile")
 include(":wear")
+include(":mobile")
