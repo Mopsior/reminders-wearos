@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -39,8 +40,15 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.compose.animation.graphics)
+    implementation(libs.androidx.wear)
     val wear_compose_version = "1.5.5"
     implementation("androidx.wear.compose:compose-navigation:$wear_compose_version")
+    val room_version = "2.8.3"
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:${room_version}")
+    // room-ktx: Wsparcie dla Kotlin coroutines i Flow
     implementation(libs.play.services.wearable)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -62,4 +70,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.jetbrains.kotlinx.coroutines.play.services)
+    implementation(libs.androidx.wear.input)
 }

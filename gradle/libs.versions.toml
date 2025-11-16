@@ -17,17 +17,21 @@ constraintlayout = "2.1.4"
 composeBom = "2024.09.00"
 composeMaterial = "1.2.1"
 composeFoundation = "1.2.1"
+wearInput = "1.2.0"
 wearToolingPreview = "1.0.0"
 activityCompose = "1.8.0"
 coreSplashscreen = "1.0.1"
 foundationLayout = "1.9.4"
 lifecycleRuntimeKtx = "2.6.1"
+animationGraphics = "1.9.4"
+wear = "1.3.0"
 
 [libraries]
 androidx-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
 androidx-compose-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "composeNavigation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-wear-input = { module = "androidx.wear:wear-input", version.ref = "wearInput" }
 jetbrains-kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -54,6 +58,8 @@ androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscree
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-animation-graphics = { group = "androidx.compose.animation", name = "animation-graphics", version.ref = "animationGraphics" }
+androidx-wear = { group = "androidx.wear", name = "wear", version.ref = "wear" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
