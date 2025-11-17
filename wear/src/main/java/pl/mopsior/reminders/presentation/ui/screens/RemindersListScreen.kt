@@ -50,7 +50,7 @@ fun RemindersListScreen(
 ) {
 //  collectAsStateWithLifecycle subskrybuje i odsubskrybuje automatycznie
 //  by - pozwala na użycie bez .value
-    val todos by viewModel.allTodos.collectAsStateWithLifecycle()
+    val todos by viewModel.recentTodos.collectAsStateWithLifecycle()
 
     val listState = rememberScalingLazyListState()
 

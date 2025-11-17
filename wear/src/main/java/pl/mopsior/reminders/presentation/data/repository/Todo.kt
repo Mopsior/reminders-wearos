@@ -3,10 +3,12 @@ package pl.mopsior.reminders.presentation.data.repository
 import kotlinx.coroutines.flow.Flow
 import pl.mopsior.reminders.presentation.data.dao.TodoDao
 import pl.mopsior.reminders.presentation.data.entities.TodoEntity
+import pl.mopsior.reminders.presentation.utils.DateUtils
 
 // Warstwa między ViewModel a Dao
 class TodoRepository(private val todoDao: TodoDao) {
     val allTodos: Flow<List<TodoEntity>> = todoDao.getAllTodos()
+    val recentTodos: Flow<List<TodoEntity>> = todoDao.getRecentTodos(DateUtils.getStartOfToday())
 
     suspend fun getTodoById(id: Long): TodoEntity? {
         return todoDao.getTodoById(id)
@@ -29,7 +31,7 @@ class TodoRepository(private val todoDao: TodoDao) {
 
         todo?.let {
 //          odwrócona kopia
-            val updatedTodo = it.copy(isCompleted = !it.isCompleted)
+            val updatedTodo = it.copy(isCompleted = !it.isCompleted, completedAt = if (!it.isCompleted) System.currentTimeMillis() else null)
 
             todoDao.update(updatedTodo)
         }

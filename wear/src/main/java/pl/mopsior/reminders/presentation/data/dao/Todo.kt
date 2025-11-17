@@ -11,9 +11,17 @@ import pl.mopsior.reminders.presentation.data.entities.TodoEntity
 
 @Dao
 interface TodoDao {
-    @Query("SELECT * FROM todos ORDER BY createdAt DESC")
+    @Query("SELECT * FROM todos ORDER BY createdAt ASC")
     fun getAllTodos(): Flow<List<TodoEntity>>
 //    przez Flow dane będą aktualizowane po zmianie w DB
+
+    @Query("""
+        SELECT * FROM todos 
+        WHERE isCompleted = 0 
+           OR (isCompleted = 1 AND completedAt >= :startOfToday)
+        ORDER BY createdAt DESC
+    """)
+    fun getRecentTodos(startOfToday: Long): Flow<List<TodoEntity>>
 
     @Query("SELECT * FROM todos WHERE id = :id LIMIT 1")
     suspend fun getTodoById(id: Long): TodoEntity?

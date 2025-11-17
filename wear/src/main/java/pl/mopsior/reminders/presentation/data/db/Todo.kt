@@ -9,7 +9,7 @@ import pl.mopsior.reminders.presentation.data.entities.TodoEntity
 
 @Database(
     entities = [TodoEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class TodoDatabase : RoomDatabase() {
@@ -34,10 +34,11 @@ abstract class TodoDatabase : RoomDatabase() {
                     context = context.applicationContext,
                     klass = TodoDatabase::class.java,
                     name = "todo_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration(true)
+                    .build()
 
                 INSTANCE = instance
-//              to jest return
                 instance
             }
         }
@@ -50,9 +51,3 @@ abstract class TodoDatabase : RoomDatabase() {
         }
     }
 }
-
-// JAK UŻYWAĆ:
-
-// val database = TodoDatabase.getDatabase(context)
-// val dao = database.todoDao()
-// dao.insert(TodoEntity(title = "Nowe zadanie"))

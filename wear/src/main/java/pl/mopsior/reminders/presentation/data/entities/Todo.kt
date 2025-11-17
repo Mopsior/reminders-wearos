@@ -10,5 +10,6 @@ data class TodoEntity(
 
     val title: String,
     val isCompleted: Boolean = false,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val completedAt: Long? = null
 )

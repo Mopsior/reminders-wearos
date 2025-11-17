@@ -20,6 +20,13 @@ class TodoViewModel(private val repository: TodoRepository) : ViewModel() {
             initialValue = emptyList() // początkowa wartość kiedy apka sie ładuje
         )
 
+    val recentTodos: StateFlow<List<TodoEntity>> = repository.recentTodos
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
     fun addTodo(title: String) {
         if (title.trim().isBlank()) return
         Log.i("TodoViewModel", "Adding todo with title: $title")
@@ -38,8 +45,7 @@ class TodoViewModel(private val repository: TodoRepository) : ViewModel() {
 
     fun toggleTodoCompleted(todo: TodoEntity) {
         viewModelScope.launch {
-            val updatedTodo = todo.copy(isCompleted = !todo.isCompleted)
-            repository.update(updatedTodo)
+            repository.toggleCompleted(todo.id)
         }
     }
 

@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.SplitToggleChip
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.ToggleChip
 import pl.mopsior.reminders.presentation.data.entities.TodoEntity
@@ -22,8 +23,10 @@ fun TodoItem(
     modifier: Modifier = Modifier
 ) {
     ToggleChip(
+//    SplitToggleChip(
         checked = todo.isCompleted,
         onCheckedChange = { onToggleCompleted() },
+//        onClick = { onDelete() },
         label = {
             Text(
                 text = todo.title,
