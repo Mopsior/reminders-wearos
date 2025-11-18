@@ -11,7 +11,7 @@ import pl.mopsior.reminders.R
 fun Title() {
     Text(
         text = stringResource(R.string.title),
-        fontSize = 12.sp,
+        fontSize = 14.sp,
         textAlign = TextAlign.Center,
     )
 }

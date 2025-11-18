@@ -38,6 +38,7 @@ import androidx.wear.compose.material.scrollAway
 import androidx.wear.tooling.preview.devices.WearDevices
 import pl.mopsior.reminders.presentation.WearApp
 import pl.mopsior.reminders.presentation.data.viewModel.TodoViewModel
+import pl.mopsior.reminders.presentation.theme.RemindersTheme
 import pl.mopsior.reminders.presentation.ui.components.AddButton
 import pl.mopsior.reminders.presentation.ui.components.PhoneButton
 import pl.mopsior.reminders.presentation.ui.components.Title
@@ -46,7 +47,6 @@ import pl.mopsior.reminders.presentation.ui.components.TodoItem
 @Composable
 fun RemindersListScreen(
     viewModel: TodoViewModel,
-    modifier: Modifier = Modifier
 ) {
 //  collectAsStateWithLifecycle subskrybuje i odsubskrybuje automatycznie
 //  by - pozwala na użycie bez .value
@@ -70,7 +70,7 @@ fun RemindersListScreen(
                 ListHeader(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp)
+                        .padding(top = 4.dp)
                 ) {
                     Title()
                 }
@@ -94,9 +94,7 @@ fun RemindersListScreen(
                         onToggleCompleted = {
                             viewModel.toggleTodoCompleted(todo)
                         },
-                        onDelete = {
-                            viewModel.deleteTodo(todo)
-                        }
+                        lastItem = index == todos.size - 1
                     )
                 }
             }
@@ -120,8 +118,13 @@ fun RemindersListScreen(
     }
 }
 
-@Preview(name = "Main Screen", device = WearDevices.LARGE_ROUND, showSystemUi = true)
-@Composable
-fun MainScreenPreview() {
-    WearApp()
-}
+//@Preview(name = "Main Screen", device = WearDevices.LARGE_ROUND, showSystemUi = true)
+//@Composable
+//fun MainScreenPreview() {
+//    RemindersTheme {
+//        RemindersListScreen(
+////            viewModel = TodoViewModel
+//        )
+//    }
+//}
+

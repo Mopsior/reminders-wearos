@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation(libs.androidx.compose.animation.graphics)
     implementation(libs.androidx.wear)
+    implementation(libs.androidx.material3)
     val wear_compose_version = "1.5.5"
     implementation("androidx.wear.compose:compose-navigation:$wear_compose_version")
     val room_version = "2.8.3"
