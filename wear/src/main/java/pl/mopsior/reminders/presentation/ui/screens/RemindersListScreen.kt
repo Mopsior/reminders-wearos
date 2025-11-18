@@ -1,26 +1,14 @@
 package pl.mopsior.reminders.presentation.ui.screens
 
 import android.util.Log
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,12 +19,10 @@ import androidx.wear.compose.material.ListHeader
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
-import androidx.wear.compose.material.scrollAway
 import androidx.wear.tooling.preview.devices.WearDevices
-import pl.mopsior.reminders.presentation.WearApp
+import pl.mopsior.reminders.presentation.data.entities.TodoEntity
 import pl.mopsior.reminders.presentation.data.viewModel.TodoViewModel
 import pl.mopsior.reminders.presentation.theme.RemindersTheme
 import pl.mopsior.reminders.presentation.ui.components.AddButton
@@ -44,13 +30,36 @@ import pl.mopsior.reminders.presentation.ui.components.PhoneButton
 import pl.mopsior.reminders.presentation.ui.components.Title
 import pl.mopsior.reminders.presentation.ui.components.TodoItem
 
+val exampleTodosList = listOf(
+    TodoEntity(
+        id = 1L,
+        title = "Buy milk"
+    ),
+    TodoEntity(
+        id = 2L,
+        title = "Send a very long email to a very important customer",
+        isCompleted = true,
+        completedAt = System.currentTimeMillis()
+    ),
+    TodoEntity(
+        id = 3L,
+        title = "Walk the dog"
+    )
+)
+
 @Composable
 fun RemindersListScreen(
-    viewModel: TodoViewModel,
+    viewModel: TodoViewModel? = null,
+    isPreview: Boolean = false,
+    previewTodos: List<TodoEntity>? = null
 ) {
-//  collectAsStateWithLifecycle subskrybuje i odsubskrybuje automatycznie
-//  by - pozwala na użycie bez .value
-    val todos by viewModel.recentTodos.collectAsStateWithLifecycle()
+    // daje previewTodos lub przykładową listę gdy isPreview = true, inaczej viewmodel
+    val todos: List<TodoEntity> = if (isPreview) {
+        previewTodos ?: exampleTodosList
+    } else {
+        val vm = viewModel ?: throw IllegalArgumentException("viewModel must be provided when not in preview")
+        vm.recentTodos.collectAsStateWithLifecycle().value
+    }
 
     val listState = rememberScalingLazyListState()
 
@@ -92,7 +101,7 @@ fun RemindersListScreen(
                     TodoItem(
                         todo = todo,
                         onToggleCompleted = {
-                            viewModel.toggleTodoCompleted(todo)
+                            viewModel?.toggleTodoCompleted(todo)
                         },
                         lastItem = index == todos.size - 1
                     )
@@ -109,7 +118,7 @@ fun RemindersListScreen(
                 ) {
                     AddButton(onAdd = { title ->
                         Log.i("RemindersListScreen", "Adding todo: $title")
-                        viewModel.addTodo(title)
+                        viewModel?.addTodo(title)
                     })
                     PhoneButton()
                 }
@@ -118,13 +127,23 @@ fun RemindersListScreen(
     }
 }
 
-//@Preview(name = "Main Screen", device = WearDevices.LARGE_ROUND, showSystemUi = true)
-//@Composable
-//fun MainScreenPreview() {
-//    RemindersTheme {
-//        RemindersListScreen(
-////            viewModel = TodoViewModel
-//        )
-//    }
-//}
+@Preview(device = WearDevices.LARGE_ROUND, showSystemUi = true)
+@Composable
+fun MainScreenPreview() {
+    RemindersTheme {
+        RemindersListScreen(
+            isPreview = true
+        )
+    }
+}
 
+@Preview(device = WearDevices.LARGE_ROUND, showSystemUi = true)
+@Composable
+fun EmptyListPreview() {
+    RemindersTheme {
+        RemindersListScreen(
+            isPreview = true,
+            previewTodos = emptyList()
+        )
+    }
+}

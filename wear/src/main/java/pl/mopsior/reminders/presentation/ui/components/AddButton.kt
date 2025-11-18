@@ -18,12 +18,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
 import androidx.wear.input.wearableExtender
+import androidx.wear.tooling.preview.devices.WearDevices
+import pl.mopsior.reminders.presentation.utils.PreviewBox
 
 @Composable
 fun AddButton(onAdd: (String) -> Unit) {
@@ -66,5 +69,13 @@ fun AddButton(onAdd: (String) -> Unit) {
             imageVector = Icons.Default.Add,
             contentDescription = "Add",
         )
+    }
+}
+
+@Preview(device = WearDevices.LARGE_ROUND, showSystemUi = true)
+@Composable
+fun AddButtonPreview() {
+    PreviewBox{
+        AddButton({ })
     }
 }

@@ -44,6 +44,7 @@ import androidx.wear.tooling.preview.devices.WearDevices
 import pl.mopsior.reminders.presentation.WearApp
 import pl.mopsior.reminders.presentation.data.entities.TodoEntity
 import pl.mopsior.reminders.presentation.theme.RemindersTheme
+import pl.mopsior.reminders.presentation.ui.screens.RemindersListScreen
 
 @Composable
 
@@ -151,63 +152,12 @@ fun TodoItem(
 }
 
 
-@Preview(name = "Main Screen", device = WearDevices.LARGE_ROUND, showSystemUi = true)
+@Preview(device = WearDevices.LARGE_ROUND, showSystemUi = true)
 @Composable
-fun MainScreenPreview() {
+fun TodosScreenPreview() {
     RemindersTheme {
-        Scaffold(
-            vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) },
-        ) {
-            ScalingLazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                autoCentering = null,
-                ) {
-                item {
-                    ListHeader(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                    ) {
-                        Title()
-                    }
-                }
-
-                item {
-                    TodoItem(
-                        todo = TodoEntity(
-                            id = 1,
-                            title = "Sample Todo Item",
-                            isCompleted = true
-                        ),
-                        onToggleCompleted = {},
-                    )
-                }
-                item {
-                    TodoItem(
-                        todo = TodoEntity(
-                            id = 1,
-                            title = "Sample Todo Item asdhasdahsdiasdqwdeygtshjbefsdhjckwesdzuixckj",
-                            isCompleted = false
-                        ),
-                        onToggleCompleted = {},
-                        lastItem = true
-                    )
-                }
-
-                item {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement
-                            .spacedBy(4.dp, Alignment.CenterHorizontally),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AddButton(onAdd = {})
-                        PhoneButton()
-                    }
-                }
-            }
-        }
+        RemindersListScreen(
+            isPreview = true
+        )
     }
 }
