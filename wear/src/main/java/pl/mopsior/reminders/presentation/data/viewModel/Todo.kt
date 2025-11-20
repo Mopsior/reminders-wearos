@@ -54,4 +54,12 @@ class TodoViewModel(private val repository: TodoRepository) : ViewModel() {
             repository.delete(todo)
         }
     }
+
+    fun deleteTodosByIds(ids: List<Long>) {
+        if (ids.isEmpty()) return
+
+        viewModelScope.launch {
+            repository.deleteByIds(ids)
+        }
+    }
 }

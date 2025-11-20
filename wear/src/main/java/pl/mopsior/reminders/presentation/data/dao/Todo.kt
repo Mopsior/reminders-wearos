@@ -16,10 +16,12 @@ interface TodoDao {
 //    przez Flow dane będą aktualizowane po zmianie w DB
 
     @Query("""
-        SELECT * FROM todos 
-        WHERE isCompleted = 0 
-           OR (isCompleted = 1 AND completedAt >= :startOfToday)
-        ORDER BY createdAt DESC
+        SELECT * FROM todos
+        WHERE isCompleted = 0 OR (isCompleted = 1 AND completedAt >= :startOfToday)
+        ORDER BY 
+          CASE WHEN isCompleted = 1 THEN 1 ELSE 0 END ASC,
+          CASE WHEN isCompleted = 1 THEN completedAt ELSE NULL END DESC,
+          createdAt DESC
     """)
     fun getRecentTodos(startOfToday: Long): Flow<List<TodoEntity>>
 
@@ -42,5 +44,8 @@ interface TodoDao {
     @Delete
     suspend fun delete(todo: TodoEntity)
 
+    // Usuń wiele zadań po liście id
+    @Query("DELETE FROM todos WHERE id IN (:ids)")
+    suspend fun deleteByIds(ids: List<Long>): Int
 
 }

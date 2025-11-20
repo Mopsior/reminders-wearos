@@ -11,9 +11,11 @@ import pl.mopsior.reminders.R
 import pl.mopsior.reminders.presentation.utils.PreviewBox
 
 @Composable
-fun Title() {
+fun Title(
+    text: String
+) {
     Text(
-        text = stringResource(R.string.title),
+        text = text,
         fontSize = 14.sp,
         textAlign = TextAlign.Center,
     )
@@ -23,6 +25,6 @@ fun Title() {
 @Composable
 fun TitleComponentPreview() {
     PreviewBox {
-        Title()
+        Title(text = stringResource(R.string.title))
     }
 }

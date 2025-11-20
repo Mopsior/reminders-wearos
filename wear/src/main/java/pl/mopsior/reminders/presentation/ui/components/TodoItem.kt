@@ -142,12 +142,12 @@ fun TodoItem(
                 lineHeight = 1.4.em
             )
         }
-        if (!lastItem) {
-            HorizontalDivider(
-                color = Color.DarkGray,
-                thickness = 1.dp,
-            )
-        }
+//        if (!lastItem) {
+//            HorizontalDivider(
+//                color = Color.DarkGray,
+//                thickness = 1.dp,
+//            )
+//        }
     }
 }
 

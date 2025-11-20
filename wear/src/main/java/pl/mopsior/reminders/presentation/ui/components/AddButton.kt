@@ -2,27 +2,20 @@ package pl.mopsior.reminders.presentation.ui.components
 
 import android.app.Activity
 import android.app.RemoteInput
-import android.content.Intent
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.Text
 import androidx.wear.input.RemoteInputIntentHelper
 import androidx.wear.input.wearableExtender
 import androidx.wear.tooling.preview.devices.WearDevices
@@ -50,8 +43,6 @@ fun AddButton(onAdd: (String) -> Unit) {
     }
 
     Button(
-        modifier = Modifier
-            .padding(top = 16.dp, bottom = 16.dp),
         onClick = {
             val remoteInput = RemoteInput.Builder(inputTextKey)
                 .setLabel(defaultText)

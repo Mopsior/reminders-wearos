@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,11 +22,14 @@ import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.Vignette
 import androidx.wear.compose.material.VignettePosition
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import androidx.wear.tooling.preview.devices.WearDevices
+import pl.mopsior.reminders.R
 import pl.mopsior.reminders.presentation.data.entities.TodoEntity
 import pl.mopsior.reminders.presentation.data.viewModel.TodoViewModel
 import pl.mopsior.reminders.presentation.theme.RemindersTheme
 import pl.mopsior.reminders.presentation.ui.components.AddButton
+import pl.mopsior.reminders.presentation.ui.components.EditButton
 import pl.mopsior.reminders.presentation.ui.components.PhoneButton
 import pl.mopsior.reminders.presentation.ui.components.Title
 import pl.mopsior.reminders.presentation.ui.components.TodoItem
@@ -51,7 +55,8 @@ val exampleTodosList = listOf(
 fun RemindersListScreen(
     viewModel: TodoViewModel? = null,
     isPreview: Boolean = false,
-    previewTodos: List<TodoEntity>? = null
+    previewTodos: List<TodoEntity>? = null,
+    selectRedirect: () -> Unit = { }
 ) {
     // daje previewTodos lub przykładową listę gdy isPreview = true, inaczej viewmodel
     val todos: List<TodoEntity> = if (isPreview) {
@@ -62,6 +67,7 @@ fun RemindersListScreen(
     }
 
     val listState = rememberScalingLazyListState()
+    val navController = rememberSwipeDismissableNavController()
 
 //  główny scaffold aplikacji
     Scaffold(
@@ -81,7 +87,7 @@ fun RemindersListScreen(
                         .fillMaxWidth()
                         .padding(top = 4.dp)
                 ) {
-                    Title()
+                    Title(text = stringResource(R.string.title))
                 }
             }
 
@@ -108,20 +114,35 @@ fun RemindersListScreen(
                 }
             }
 
+            val gap = 4.dp
+
             item {
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, bottom = 0.dp),
                     horizontalArrangement = Arrangement
-                        .spacedBy(4.dp, Alignment.CenterHorizontally),
+                        .spacedBy(gap, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     AddButton(onAdd = { title ->
                         Log.i("RemindersListScreen", "Adding todo: $title")
                         viewModel?.addTodo(title)
                     })
-                    PhoneButton()
+                    EditButton(
+                        isSecondary = true,
+                        onClick = {
+                            selectRedirect()
+                        }
+                    )
                 }
+            }
+
+            item {
+                PhoneButton(
+                    extraWidth = gap,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
             }
         }
     }

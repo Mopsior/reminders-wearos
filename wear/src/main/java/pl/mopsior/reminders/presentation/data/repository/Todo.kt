@@ -26,6 +26,10 @@ class TodoRepository(private val todoDao: TodoDao) {
         todoDao.delete(todo)
     }
 
+    suspend fun deleteByIds(ids: List<Long>): Int {
+        return if (ids.isEmpty()) 0 else todoDao.deleteByIds(ids)
+    }
+
     suspend fun toggleCompleted(todoId: Long) {
         val todo = todoDao.getTodoById(todoId)
 
